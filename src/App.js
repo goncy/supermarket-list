@@ -52,61 +52,65 @@ const App = () => {
     }
   }
 
-  if (status === "booting") return <span>Loading...</span>;
-
   return (
     <Fragment>
       <h1>Supermarket list</h1>
-      <h3>{items.length} item(s)</h3>
-      <ul>
-        {items.map(_item => (
-          <li key={_item.id}>
-            <b>{_item.name}</b>
-            {status !== "pending" && (
-              <i
-                className="hover-danger"
-                onClick={() => handleDelete(_item.id)}
-              >
-                delete
-              </i>
-            )}
-          </li>
-        ))}
-      </ul>
-      <button
-        className="primary"
-        disabled={status === "pending"}
-        type="button"
-        onClick={() => setItem("New item")}
-      >
-        Add item
-      </button>
-      {item && (
-        <div className="overlay">
-          <div className="modal">
-            <form onSubmit={handleAdd}>
-              <h2>Add item</h2>
-              <input
-                autoFocus
-                type="text"
-                value={item}
-                onChange={event => setItem(event.target.value)}
-              />
-              <div className="inline">
-                <button type="button" onClick={() => setItem(null)}>
-                  Close
-                </button>
-                <button
-                  className="primary"
-                  disabled={status === "pending"}
-                  type="submit"
-                >
-                  Add
-                </button>
+      {status === "booting" ? (
+        <span>Loading...</span>
+      ) : (
+        <Fragment>
+          <h3>{items.length} item(s)</h3>
+          <ul>
+            {items.map(_item => (
+              <li key={_item.id}>
+                <b>{_item.name}</b>
+                {status !== "pending" && (
+                  <i
+                    className="hover-danger"
+                    onClick={() => handleDelete(_item.id)}
+                  >
+                    delete
+                  </i>
+                )}
+              </li>
+            ))}
+          </ul>
+          <button
+            className="primary"
+            disabled={status === "pending"}
+            type="button"
+            onClick={() => setItem("New item")}
+          >
+            Add item
+          </button>
+          {item && (
+            <div className="overlay">
+              <div className="modal">
+                <form onSubmit={handleAdd}>
+                  <h2>Add item</h2>
+                  <input
+                    autoFocus
+                    type="text"
+                    value={item}
+                    onChange={event => setItem(event.target.value)}
+                  />
+                  <div className="inline">
+                    <button type="button" onClick={() => setItem(null)}>
+                      Close
+                    </button>
+                    <button
+                      className="primary"
+                      disabled={status === "pending"}
+                      type="submit"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
-        </div>
+            </div>
+          )}
+        </Fragment>
       )}
     </Fragment>
   );
