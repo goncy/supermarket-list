@@ -3,42 +3,56 @@ import React, {Fragment, useEffect, useState} from "react";
 import api from "./api";
 
 const App = () => {
-  const [status, setStatus] = useState("pending");
+  const [status, setStatus] = useState("booting");
   const [items, setItems] = useState([]);
   const [item, setItem] = useState();
 
   useEffect(() => {
     api.items.fetch().then(_items => {
       setItems(_items);
-      setStatus("resolved");
+      setStatus("init");
     });
   }, []);
 
-  function handleAdd(event) {
+  async function handleAdd(event) {
     event.preventDefault();
+    setStatus("pending");
 
-    setItems(actualItems => {
-      const newItems = actualItems.concat({id: actualItems.length, name: item});
+    try {
+      const newItems = items.concat({id: items.length, name: item});
 
-      api.items.update(newItems);
+      await api.items.update(newItems);
 
-      return newItems;
-    });
-
-    setItem(null);
-  }
-
-  function handleDelete(id) {
-    setItems(actualItems => {
-      const newItems = actualItems.filter(_item => _item.id !== id);
-
-      api.items.update(newItems);
+      setStatus("resolved");
+      setItems(newItems);
+      setItem(null);
 
       return newItems;
-    });
+    } catch (e) {
+      console.log(e.message);
+
+      setStatus("rejected");
+    }
   }
 
-  if (status === "pending") return <span>Loading...</span>;
+  async function handleDelete(id) {
+    setStatus("pending");
+
+    try {
+      const newItems = items.filter(_item => _item.id !== id);
+
+      await api.items.update(newItems);
+
+      setStatus("resolved");
+      setItems(newItems);
+
+      return newItems;
+    } catch (e) {
+      setStatus("rejected");
+    }
+  }
+
+  if (status === "booting") return <span>Loading...</span>;
 
   return (
     <Fragment>
@@ -48,19 +62,28 @@ const App = () => {
         {items.map(_item => (
           <li key={_item.id}>
             <b>{_item.name}</b>
-            <i className="hover-danger" onClick={() => handleDelete(_item.id)}>
-              delete
-            </i>
+            {status !== "pending" && (
+              <i
+                className="hover-danger"
+                onClick={() => handleDelete(_item.id)}
+              >
+                delete
+              </i>
+            )}
           </li>
         ))}
       </ul>
-      <button type="button" onClick={() => setItem("New item")}>
+      <button
+        className="primary"
+        disabled={status === "pending"}
+        type="button"
+        onClick={() => setItem("New item")}
+      >
         Add item
       </button>
       {item && (
         <div className="overlay">
           <div className="modal">
-            <span className="close" />
             <form onSubmit={handleAdd}>
               <h2>Add item</h2>
               <input
@@ -69,7 +92,18 @@ const App = () => {
                 value={item}
                 onChange={event => setItem(event.target.value)}
               />
-              <button type="submit">Add</button>
+              <div className="inline">
+                <button type="button" onClick={() => setItem(null)}>
+                  Close
+                </button>
+                <button
+                  className="primary"
+                  disabled={status === "pending"}
+                  type="submit"
+                >
+                  Add
+                </button>
+              </div>
             </form>
           </div>
         </div>

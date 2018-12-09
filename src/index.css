@@ -2,6 +2,7 @@
 :root {
   --white: #fff;
   --light: #f5f5f5;
+  --gray: whitesmoke;
   --primary-lighter: #32b9ff;
   --primary: #00a8ff;
   --primary-darker: #0086cc;
@@ -34,22 +35,26 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
 }
 
+*:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: wait;
+}
+
 /* UI */
 button {
-  background-color: var(--primary);
   border: none;
-  color: var(--white);
   font-size: 18px;
   border-radius: 4px;
   height: 50px;
-  border: 1px solid var(--primary-darker);
   cursor: pointer;
-  transition: border .2s,background-color .2s,transform .2s;
+  transition: .2s;
   outline: none;
+  background-color: var(--gray);
 }
 
-button:hover {
-  background-color: var(--primary-lighter);
+button:hover:not(:disabled) {
+  opacity: 0.8;
   transform: scale(1.02);
 }
 
@@ -120,7 +125,24 @@ form {
   z-index: 2;
 }
 
+.inline {
+  display: flex;
+}
+
+.inline button, .inline input {
+  flex: 1;
+}
+
+.inline button:not(:last-child), .inline input:not(:last-child) {
+  margin-right: 20px;
+}
+
 /* COLORS */
 .hover-danger:hover {
   color: var(--danger);
+}
+
+button.primary {
+  background-color: var(--primary);
+  color: var(--white);
 }
