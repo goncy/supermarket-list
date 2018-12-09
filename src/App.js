@@ -19,7 +19,7 @@ const App = () => {
     setStatus("pending");
 
     try {
-      const newItems = items.concat({id: items.length, name: item});
+      const newItems = items.concat({id: String(Math.random()), name: item});
 
       await api.items.update(newItems);
 
