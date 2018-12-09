@@ -98,6 +98,7 @@ input {
 form {
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 /* ELEMENTS */
@@ -115,10 +116,10 @@ form {
 }
 
 .modal {
-  margin-top: 140px;
+  margin-top: 120px;
   background-color: var(--white);
-  width: 400px;
-  padding: 40px;
+  width: 100%;
+  max-width: 400px;
   border-radius: 6px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.12);
   text-align: center;
