@@ -1,14 +1,126 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* VARIABLES */
+:root {
+  --white: #fff;
+  --light: #f5f5f5;
+  --primary-lighter: #32b9ff;
+  --primary: #00a8ff;
+  --primary-darker: #0086cc;
+  --danger: #e84118;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+/* LAYOUT */
+body {
+  font-size: 18px;
+  font-family: Nunito,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  background: var(--light);
+}
+
+#root {
+  margin: 0 auto;
+  margin-top: 3rem;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* OVERIDES */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+}
+
+/* UI */
+button {
+  background-color: var(--primary);
+  border: none;
+  color: var(--white);
+  font-size: 18px;
+  border-radius: 4px;
+  height: 50px;
+  border: 1px solid var(--primary-darker);
+  cursor: pointer;
+  transition: border .2s,background-color .2s,transform .2s;
+  outline: none;
+}
+
+button:hover {
+  background-color: var(--primary-lighter);
+  transform: scale(1.02);
+}
+
+ul {
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 5px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+  padding: 14px 20px;
+  font-size: 18;
+}
+
+i {
+  cursor: pointer;
+  transition: .2s;
+}
+
+i:hover {
+  transform: scale(1.1);
+}
+
+input {
+  height: 46px;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 0 12px;
+  font-size: 16px;
+  color: rgba(0,0,0,.7);
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ELEMENTS */
+.overlay {
+  background-color: rgba(236,240,241,.9);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal {
+  margin-top: 140px;
+  background-color: var(--white);
+  width: 400px;
+  padding: 40px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.12);
+  text-align: center;
+  z-index: 2;
+}
+
+/* COLORS */
+.hover-danger:hover {
+  color: var(--danger);
 }
