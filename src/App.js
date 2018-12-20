@@ -18,9 +18,9 @@ const App = () => {
     try {
       setStatus("pending");
 
-      const newItems = await api.items.update(value);
+      await api.items.update(value);
 
-      setItems(newItems);
+      setItems(value);
       setStatus("resolved");
       setItem(null);
     } catch (e) {
