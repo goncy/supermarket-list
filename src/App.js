@@ -8,48 +8,40 @@ const App = () => {
   const [item, setItem] = useState();
 
   useEffect(() => {
-    api.items.fetch().then(_items => {
-      setItems(_items);
+    api.items.fetch().then(initialItems => {
+      setItems(initialItems);
       setStatus("init");
     });
   }, []);
 
-  async function handleAdd(event) {
-    event.preventDefault();
-    setStatus("pending");
-
+  async function handleUpdate(value) {
     try {
-      const newItems = items.concat({id: String(Math.random()), name: item});
+      setStatus("pending");
 
-      await api.items.update(newItems);
+      const newItems = await api.items.update(value);
 
-      setStatus("resolved");
       setItems(newItems);
+      setStatus("resolved");
       setItem(null);
-
-      return newItems;
     } catch (e) {
-      console.log(e.message);
+      console.log("e.message:", e.message);
 
       setStatus("rejected");
     }
   }
 
-  async function handleDelete(id) {
-    setStatus("pending");
+  function handleOpenModal() {
+    setItem("New item");
+  }
 
-    try {
-      const newItems = items.filter(_item => _item.id !== id);
+  function handleAdd(event) {
+    event.preventDefault();
 
-      await api.items.update(newItems);
+    handleUpdate(items.concat({id: String(Math.random()), name: item}));
+  }
 
-      setStatus("resolved");
-      setItems(newItems);
-
-      return newItems;
-    } catch (e) {
-      setStatus("rejected");
-    }
+  function handleDelete(id) {
+    handleUpdate(items.filter(_item => _item.id !== id));
   }
 
   return (
@@ -79,7 +71,7 @@ const App = () => {
             className="primary"
             disabled={status === "pending"}
             type="button"
-            onClick={() => setItem("New item")}
+            onClick={handleOpenModal}
           >
             Add item
           </button>
