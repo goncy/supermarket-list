@@ -2,10 +2,15 @@ import React, {Fragment, useEffect, useState} from "react";
 
 import api from "./api";
 
+interface Item {
+  id: string,
+  name: string | null
+}
+
 const App = () => {
   const [status, setStatus] = useState("booting");
-  const [items, setItems] = useState([]);
-  const [item, setItem] = useState();
+  const [items, setItems]: [Array<Item>, Function] = useState([]);
+  const [item, setItem]: [string | null, Function] = useState(null);
 
   useEffect(() => {
     api.items.fetch().then(initialItems => {
@@ -14,7 +19,7 @@ const App = () => {
     });
   }, []);
 
-  async function handleUpdate(value) {
+  async function handleUpdate(value: Array<any>) {
     try {
       setStatus("pending");
 
@@ -31,16 +36,16 @@ const App = () => {
   }
 
   function handleOpenModal() {
-    setItem("New item");
+    setItem("");
   }
 
-  function handleAdd(event) {
+  function handleAdd(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     handleUpdate(items.concat({id: String(Math.random()), name: item}));
   }
 
-  function handleDelete(id) {
+  function handleDelete(id: string) {
     handleUpdate(items.filter(_item => _item.id !== id));
   }
 
@@ -75,7 +80,7 @@ const App = () => {
           >
             Add item
           </button>
-          {item && (
+          {item !== null && (
             <div className="overlay">
               <div className="modal">
                 <form onSubmit={handleAdd}>
@@ -92,7 +97,7 @@ const App = () => {
                     </button>
                     <button
                       className="primary"
-                      disabled={status === "pending"}
+                      disabled={status === "pending" || !item}
                       type="submit"
                     >
                       Add
