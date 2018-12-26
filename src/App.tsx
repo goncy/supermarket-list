@@ -73,6 +73,7 @@ const App = () => {
             ))}
           </ul>
           <button
+            autoFocus
             className="primary"
             disabled={status === "pending"}
             type="button"
