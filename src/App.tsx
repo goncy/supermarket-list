@@ -88,6 +88,7 @@ const App = () => {
                   <h2>Add item</h2>
                   <input
                     autoFocus
+                    disabled={status === "pending"}
                     type="text"
                     value={item}
                     onChange={event => setItem(event.target.value)}
