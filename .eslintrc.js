@@ -12,7 +12,7 @@ module.exports = {
     "flowtype",
     "cypress"
   ],
-  "parser": "babel-eslint",
+  "parser": "typescript-eslint-parser",
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -33,6 +33,12 @@ module.exports = {
   "settings": {
     "flowtype": {
       "onlyFilesWithFlowAnnotation": true
+    },
+    "import/resolver": {
+      "typescript": {},
+      "typescript": {
+        "directory": "./"
+      }
     }
   },
   "rules": {

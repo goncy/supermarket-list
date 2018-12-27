@@ -3,7 +3,8 @@ const deffer = (fn: any): Promise<any> =>
 
 export default {
   items: {
-    fetch: (): Promise<[]> => deffer(JSON.parse(localStorage.getItem("items") || "[]")),
+    fetch: (): Promise<Array<Object>> =>
+      deffer(JSON.parse(localStorage.getItem("items") || "[]")),
     update: (items: Array<Object>) =>
       deffer(localStorage.setItem("items", JSON.stringify(items))),
   },

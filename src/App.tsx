@@ -3,8 +3,8 @@ import React, {Fragment, useEffect, useState} from "react";
 import api from "./api";
 
 interface Item {
-  id: string,
-  name: string | null
+  id: string;
+  name: string | null;
 }
 
 const App = () => {
