@@ -3,16 +3,14 @@ module.exports = {
   "extends": [
     "airbnb",
     "prettier",
-    "prettier/react",
-    "plugin:flowtype/recommended"
+    "prettier/react"
   ],
   "plugins": [
     "react",
     "prettier",
-    "flowtype",
     "cypress"
   ],
-  "parser": "typescript-eslint-parser",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -31,9 +29,6 @@ module.exports = {
     "cypress/globals": true
   },
   "settings": {
-    "flowtype": {
-      "onlyFilesWithFlowAnnotation": true
-    },
     "import/resolver": {
       "typescript": {},
       "typescript": {
